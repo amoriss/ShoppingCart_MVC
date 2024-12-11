@@ -1,26 +1,29 @@
 ﻿@model IEnumerable<ShoppingCart_MVC.Models.Item>
-<h1>Shopping Cart</h1>
 
-<table>
-    <thead>
-        <tr>
-            <th>Name</th>
-            <th>Price</th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
+<div class="cart-container">
+    <h1>Shopping Cart</h1>
+
+    <table class="table table-striped">
+        <thead>
             <tr>
-                <td>@item.Name</td>
-                <td>@item.Price</td>
+                <th>Name</th>
+                <th>Price</th>
+                <th>Action</th>
             </tr>
-        }
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td class="item-name">@item.Name</td>
+                    <td class="item-price">@item.Price</td>
+                    <td><button class="action-button">Remove</button></td>
+                </tr>
+            }
 
-    </tbody>
-
-
-
-
-</table>
+        </tbody>
+    </table>
+    <div class="text-end mt-4">
+        <button class="btn btn-primary btn-lg">Checkout</button>
+    </div>
+</div>
