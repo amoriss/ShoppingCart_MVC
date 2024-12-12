@@ -54,4 +54,6 @@ static void SeedDatabase (ApplicationDbContext context)
 
     }
 
+    context.SaveChanges();
+
 }
