@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using ShoppingCart_MVC.Data;
+using ShoppingCart_MVC.Helpers;
 using ShoppingCart_MVC.Models;
 using System.Diagnostics;
 
@@ -21,14 +22,44 @@ public class HomeController : Controller
         return View(items);
     }
 
-    public IActionResult Privacy()
+    [HttpPost]
+    public IActionResult AddToCart(int id)
     {
-        return View();
+        //Get selected item
+        var item = _context.Items.FirstOrDefault(i => i.Id == id);
+        if (item == null)
+        {
+            return NotFound();
+        }
+        //Get currect cart or create a new one
+        var cart = HttpContext.Session.GetObject<List<CartItem>>("Cart") ?? new List<CartItem>();
+
+        //Check if item is already in the cart
+        var cartItem = cart.FirstOrDefault(item => item.ItemId == id);
+
+        if (cartItem != null)
+        {
+            cartItem.Quantity++;
+        }
+        else
+        {
+            cart.Add(new CartItem { ItemId = item.Id, Name = item.Name, Price = item.Price, Quantity = 1 });
+        }
+
+        //Save the cart back to session
+        HttpContext.Session.SetObject("Cart", cart);
+        return RedirectToAction("Index");
+
     }
 
-    [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-    public IActionResult Error()
-    {
-        return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        public IActionResult Privacy()
+        {
+            return View();
+        }
+
+        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        public IActionResult Error()
+        {
+            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
     }
-}
