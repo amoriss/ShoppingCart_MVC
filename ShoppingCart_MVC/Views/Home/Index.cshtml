@@ -17,6 +17,11 @@
                 <tr>
                     <td class="item-name">@item.Name</td>
                     <td class="item-price">@item.Price.ToString("C")</td>
+                    <td>
+                        <form method="post" asp-action="AddToCart" asp-route-id="@item.Id">
+                            <button type="submit" class="btn btn-primary">Add To Cart</button>
+                        </form>
+                    </td>
                     <td><button class="action-button">Remove</button></td>
                 </tr>
             }
