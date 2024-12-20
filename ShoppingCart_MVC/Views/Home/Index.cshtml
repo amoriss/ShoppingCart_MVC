@@ -20,6 +20,12 @@
                     <td>
                         <form method="post" asp-action="AddToCart" asp-route-id="@item.Id">
                             <button type="submit" class="btn btn-primary">Add To Cart</button>
+                            <select name="quantity" class="form-select">
+                                @for (int i = 1; i <= 10; i++)
+                                {
+                                    <option value="@i">@i</option>
+                                }
+                            </select>
                         </form>
                     </td>
                     <td><button class="action-button">Remove</button></td>

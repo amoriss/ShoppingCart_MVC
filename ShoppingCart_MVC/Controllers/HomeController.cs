@@ -23,7 +23,7 @@ public class HomeController : Controller
     }
 
     [HttpPost]
-    public IActionResult AddToCart(int id)
+    public IActionResult AddToCart(int id, int quantity)
     {
         //Get selected item
         var item = _context.Items.FirstOrDefault(i => i.Id == id);
@@ -39,11 +39,11 @@ public class HomeController : Controller
 
         if (cartItem != null)
         {
-            cartItem.Quantity++;
+            cartItem.Quantity += quantity;
         }
         else
         {
-            cart.Add(new CartItem { ItemId = item.Id, Name = item.Name, Price = item.Price, Quantity = 1 });
+            cart.Add(new CartItem { ItemId = item.Id, Name = item.Name, Price = item.Price, Quantity = quantity });
         }
 
         //Save the cart back to session
