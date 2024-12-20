@@ -1,0 +1,44 @@
+﻿@model IEnumerable<CartItem>
+
+<div class="cart-container">
+    <h1>Your Cart</h1>
+
+    @if (!Model.Any())
+    {
+        <p>Your cart is empty.</p>
+    }
+    else
+    {
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                    <th>Total</th>
+                </tr>
+
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.Name</td>
+                        <td>@item.Price.ToString("C")</td>
+                        <td>@item.Quantity</td>
+                        <td>@(item.Price * item.Quantity)</td>
+                    </tr>
+                }
+            </tbody>
+            <div class="text-end">
+                <button class="btn btn-primary btn-lg">Checkout</button>
+            </div>
+
+
+        </table>
+    }
+
+
+
+
+</div>
