@@ -58,6 +58,25 @@ public class HomeController : Controller
         return View(cart);
     }
 
+    [HttpPost]
+    public IActionResult RemoveFromCart(int id)
+    {
+        //Retrieve cart from session
+        var cart = HttpContext.Session.GetObject<List<CartItem>>("Cart") ?? new List<CartItem>();
+
+        //Find the item to remove
+        var itemToRemove = cart.FirstOrDefault(item => item.ItemId == id);
+        if (itemToRemove != null)
+        {
+            cart.Remove(itemToRemove);
+        }
+
+        //Save the updated cart back to session
+        HttpContext.Session.SetObject("Cart", cart);
+        return RedirectToAction("ViewCart");
+
+    }
+
     public IActionResult Privacy()
     {
         return View();
