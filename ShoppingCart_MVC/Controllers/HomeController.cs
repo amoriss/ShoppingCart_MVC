@@ -77,6 +77,29 @@ public class HomeController : Controller
 
     }
 
+    [HttpGet]
+    public IActionResult Checkout()
+    {
+        return View("Checkout page loaded");
+    }
+
+    [HttpGet]
+    public IActionResult OrderConfirmation()
+    {
+        return View();
+    }
+
+    [HttpPost]
+    public IActionResult SubmitOrder(CheckoutViewModel model)
+    {
+        if(ModelState.IsValid)
+        {
+            TempData["SuccessMessage"] = "Your order has been placed successfully!";
+            return RedirectToAction("OrderConfirmation");
+        }
+        return View("Checkout", model);
+    }
+
     public IActionResult Privacy()
     {
         return View();
