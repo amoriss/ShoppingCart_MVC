@@ -15,6 +15,7 @@
             @foreach (var item in Model)
             {
                 <tr>
+                    <td><img src="@item.ImageUrl" alt="@item.Name" class="product-image" /></td>
                     <td class="item-name">@item.Name</td>
                     <td class="item-price">@item.Price.ToString("C")</td>
                     <td>

@@ -51,10 +51,10 @@ static void SeedDatabase (ApplicationDbContext context)
     if(!context.Items.Any())
     {
         context.Items.AddRange(
-            new Item { Name = "Product1", Price = 20.00},
-            new Item { Name = "Product2", Price = 15.00},
-            new Item { Name = "Product3", Price = 12.99},
-            new Item { Name = "Product4", Price = 3.50}
+            new Item { Name = "Product1", Price = 20.00, ImageUrl="/images/rose.jpg"},
+            new Item { Name = "Product2", Price = 15.00, ImageUrl = "/images/rose.jpg" },
+            new Item { Name = "Product3", Price = 12.99, ImageUrl = "/images/rose.jpg" },
+            new Item { Name = "Product4", Price = 3.50, ImageUrl = "/images/rose.jpg" }
             );
 
     }

@@ -33,6 +33,12 @@ table {
     cursor: pointer;
 }
 
-.action-button:hover {
-    background-color: #c82333;
+    .action-button:hover {
+        background-color: #c82333;
+    }
+
+.product-image {
+    max-width: 100%;
+    height: auto;
+    margin-bottom: 10px;
 }
