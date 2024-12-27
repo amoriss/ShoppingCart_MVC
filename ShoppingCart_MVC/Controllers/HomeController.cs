@@ -43,7 +43,7 @@ public class HomeController : Controller
         }
         else
         {
-            cart.Add(new CartItem { ItemId = item.Id, Name = item.Name, Price = item.Price, Quantity = quantity });
+            cart.Add(new CartItem { ItemId = item.Id, Name = item.Name, Price = item.Price, Quantity = quantity, ImageUrl=item.ImageUrl });
         }
 
         //Save the cart back to session
