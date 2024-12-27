@@ -22,7 +22,8 @@
             <tbody>
                 @foreach (var item in Model)
                 {
-                    <tr>   
+                    <tr>
+                        <td><img src="@item.ImageUrl" alt="@item.Name" class="product-image" /></td>
                         <td>@item.Name</td>
                         <td>@item.Price.ToString("C")</td>
                         <td>
