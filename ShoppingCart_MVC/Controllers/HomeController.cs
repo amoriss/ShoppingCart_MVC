@@ -18,6 +18,7 @@ public class HomeController : Controller
 
     public IActionResult Index()
     {
+        UpdateCartCountInViewBag();
         var items = _context.Items.ToList();
         return View(items);
     }
@@ -31,7 +32,7 @@ public class HomeController : Controller
         {
             return NotFound();
         }
-        //Get currect cart or create a new one
+        //Get correct cart or create a new one
         var cart = HttpContext.Session.GetObject<List<CartItem>>("Cart") ?? new List<CartItem>();
 
         //Check if item is already in the cart
@@ -43,7 +44,7 @@ public class HomeController : Controller
         }
         else
         {
-            cart.Add(new CartItem { ItemId = item.Id, Name = item.Name, Price = item.Price, Quantity = quantity, ImageUrl=item.ImageUrl });
+            cart.Add(new CartItem { ItemId = item.Id, Name = item.Name, Price = item.Price, Quantity = quantity, ImageUrl = item.ImageUrl });
         }
 
         //Save the cart back to session
@@ -92,12 +93,25 @@ public class HomeController : Controller
     [HttpPost]
     public IActionResult SubmitOrder(CheckoutViewModel model)
     {
-        if(ModelState.IsValid)
+        if (ModelState.IsValid)
         {
             TempData["SuccessMessage"] = "Your order has been placed successfully!";
             return RedirectToAction("OrderConfirmation");
         }
         return View("Checkout", model);
+    }
+
+    private void UpdateCartCountInViewBag()
+    {
+        var cart = HttpContext.Session.GetObject<List<CartItem>>("Cart");
+        if (cart != null)
+        {
+            ViewBag.CartCount = cart.Sum(item => item.Quantity);
+        }
+        else 
+        { 
+            ViewBag.CartCount = 0; 
+        }
     }
 
     public IActionResult Privacy()
