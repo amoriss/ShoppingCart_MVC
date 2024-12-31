@@ -1,41 +1,37 @@
 ﻿@model IEnumerable<ShoppingCart_MVC.Models.Item>
 
 <div class="cart-container">
-    <h1>Shopping Cart</h1>
+    <h1 class="my-4 text-center">Store</h1>
 
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>Image</th>
-                <th>Name</th>
-                <th>Price</th>
-                <th>Action</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model)
-            {
-                <tr>
-                    <td><img src="@item.ImageUrl" alt="@item.Name" class="product-image" /></td>
-                    <td class="item-name">@item.Name</td>
-                    <td class="item-price">@item.Price.ToString("C")</td>
-                    <td>
-                        <form method="post" asp-action="AddToCart" asp-route-id="@item.Id">
-                            <button type="submit" class="btn btn-primary">Add To Cart</button>
+    @foreach (var item in Model)
+    {
+        <div class="col">
+            <div class="card h-100">
+                <img src="@item.ImageUrl" alt="@item.Name" class=" card-img-top product-image" />
+                <div class="card-body">
+                    <h5 class="card-title">@item.Name</h5>
+                    <p class="card-text text-success fw-bold">@item.Price.ToString("C")</p>
+                    <form method="post" asp-action="AddToCart" asp-route-id="@item.Id">
+                        <div class="mb-2">
                             <select name="quantity" class="form-select">
                                 @for (int i = 1; i <= 10; i++)
                                 {
                                     <option value="@i">@i</option>
                                 }
                             </select>
-                        </form>
-                    </td>                   
-                </tr>
-            }
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100">
+                            <i class="bi bi-card-plus"></i> Add To Cart
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    }
 
-        </tbody>
-    </table>
     <div class="text-end mt-4">
-        <a asp-controller="Home" asp-action="ViewCart"class="btn btn-primary btn-lg">View Cart</a>
+        <a asp-controller="Home" asp-action="ViewCart" class="btn btn-primary btn-lg">
+            <i class="bi bi-cart"></i> View Cart
+        </a>
     </div>
 </div>
