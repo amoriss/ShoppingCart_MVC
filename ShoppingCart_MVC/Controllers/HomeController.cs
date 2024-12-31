@@ -3,6 +3,7 @@ using ShoppingCart_MVC.Data;
 using ShoppingCart_MVC.Helpers;
 using ShoppingCart_MVC.Models;
 using System.Diagnostics;
+using System.Runtime.InteropServices;
 
 namespace ShoppingCart_MVC.Controllers;
 public class HomeController : Controller
@@ -76,6 +77,27 @@ public class HomeController : Controller
         HttpContext.Session.SetObject("Cart", cart);
         return RedirectToAction("ViewCart");
 
+    }
+
+    [HttpPost]
+    public IActionResult UpdateCart(int id, int quantity)
+    {
+        //Retrieve the cart from the session
+        var cart = HttpContext.Session.GetObject<List<CartItem>>("Cart") ?? new List<CartItem>();
+
+        //Find item to update
+        var item = cart.FirstOrDefault(c => c.ItemId == id);
+
+        if (item != null)         
+        { 
+            //Update quantity
+            item.Quantity = quantity;
+
+            //Save updated cart to session
+            HttpContext.Session.SetObject("Cart", cart);
+
+        }
+        return RedirectToAction("ViewCart");
     }
 
     [HttpGet]
