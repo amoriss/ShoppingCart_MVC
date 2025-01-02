@@ -57,6 +57,8 @@ public class HomeController : Controller
     public IActionResult ViewCart()
     {
         var cart = HttpContext.Session.GetObject<List<CartItem>>("Cart") ?? new List<CartItem>();
+        //Update quantity
+        ViewBag.CartCount = cart.Sum(c => c.Quantity);
         return View(cart);
     }
 
