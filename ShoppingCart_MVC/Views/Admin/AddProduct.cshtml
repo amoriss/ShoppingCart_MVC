@@ -1,0 +1,14 @@
+﻿@model ShoppingCart_MVC.Models.Item
+
+
+<div class="container">
+    <h1>Add New Product</h1>
+    <form asp-action="AddProduct" method="post" class="mt-4">
+        <div class="mb-3">
+            <label asp-for="Name" class="form-label">Name</label>
+            <input asp-for="Name" class="form-control" />
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+        <button type="submit" class=" btn btn-success">Add Product</button>
+    </form>
+</div>

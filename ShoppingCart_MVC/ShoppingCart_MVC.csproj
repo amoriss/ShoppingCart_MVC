@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="Views\Admin\AddProduct.cshtml" />
     <Content Remove="Views\Home\Checkout.cshtml" />
   </ItemGroup>
 
@@ -24,11 +25,17 @@
   </ItemGroup>
 
   <ItemGroup>
+    <_ContentIncludedByDefault Remove="Views\Admin\AddProduct.cshtml" />
     <_ContentIncludedByDefault Remove="Views\Home\Checkout.cshtml" />
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="Views\Admin\AddProduct.cshtml" />
     <None Include="Views\Home\Checkout.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Views\Admin\AddProduct.cshtml" />
   </ItemGroup>
 
 </Project>
