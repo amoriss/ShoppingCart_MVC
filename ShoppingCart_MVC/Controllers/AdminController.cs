@@ -35,4 +35,40 @@ public class AdminController : Controller
         }
         return View(item);
     }
+
+    [HttpGet]
+    public IActionResult EditProduct(int id)
+    {
+
+        var product = _context.Items.Find(id);
+        if (product == null)
+        {
+            return NotFound();
+        }
+        return View(product);
+    }
+
+    [HttpPost]
+    public IActionResult EditProduct(Item item)
+    {
+        if (ModelState.IsValid)
+        {
+            _context.Items.Update(item);
+            _context.SaveChanges();
+            return RedirectToAction("Index");
+        }
+        return View(item);
+    }
+
+    [HttpPost]
+    public IActionResult DeleteProduct(int id)
+    {
+        var product = _context.Items.Find(id);
+        if (product != null)
+        {
+            _context.Items.Remove(product);
+            _context.SaveChanges();
+        }
+        return RedirectToAction("Index");
+    }
 }
