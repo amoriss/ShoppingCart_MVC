@@ -49,14 +49,44 @@ public class AdminController : Controller
     }
 
     [HttpPost]
-    public IActionResult EditProduct(Item item)
+    public IActionResult EditProduct(Item item, IFormFile? NewImage)
     {
         if (ModelState.IsValid)
         {
-            _context.Items.Update(item);
+            var existingProduct = _context.Items.Find(item.Id);
+            if (existingProduct == null)
+            {
+                return NotFound();
+            }
+
+            //Update product details
+            existingProduct.Name = item.Name;
+            existingProduct.Price = item.Price;
+
+            //Image Upload
+            if (NewImage != null)
+            {
+                var uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images");
+                var uniqueFileName = Guid.NewGuid().ToString() + "_" + NewImage.FileName;
+
+                //Save new image file
+                using (var fileStream = new FileStream(Path.Combine(uploadsFolder, uniqueFileName), FileMode.Create))
+                {
+                    NewImage.CopyTo(fileStream);
+                }
+
+                //Update image URL
+                existingProduct.ImageUrl = "/images/" + uniqueFileName;
+            }
+
+
+            //_context.Items.Update(item);
+
+            //Save changes to the database
             _context.SaveChanges();
             return RedirectToAction("Index");
         }
+
         return View(item);
     }
 

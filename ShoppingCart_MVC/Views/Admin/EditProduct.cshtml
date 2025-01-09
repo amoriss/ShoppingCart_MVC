@@ -17,6 +17,10 @@
         <div class="mb-3">
             <label asp-for="ImageUrl" class="form-label">Current Image</label>
             <img src="@Model.ImageUrl" alt="@Model.Name" class="product-image mb-3" style="max-width: 200px;"/>
+
+            <label for="NewImage" class="form-label">Change Image (Optional)</label>
+            <input type="file" id="NewImage" name="NewImage" class="form-control"/>
+
             <input asp-for="ImageUrl" class="form-control" />
             <span asp-validation-for="ImageUrl" class="text-danger"></span>
         </div>
