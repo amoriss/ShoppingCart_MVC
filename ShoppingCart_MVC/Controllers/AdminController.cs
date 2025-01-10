@@ -64,25 +64,34 @@ public class AdminController : Controller
             existingProduct.Price = item.Price;
 
             //Image Upload
-            if (NewImage != null)
+            if (NewImage != null && NewImage.Length > 0)
             {
-                var uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images");
-                var uniqueFileName = Guid.NewGuid().ToString() + "_" + NewImage.FileName;
+                var uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads");
 
-                //Save new image file
-                using (var fileStream = new FileStream(Path.Combine(uploadsFolder, uniqueFileName), FileMode.Create))
+                if (!Directory.Exists(uploadsFolder))
+                {
+                    Directory.CreateDirectory(uploadsFolder);
+                }
+
+                //Generate a unique file name
+                var fileName = Guid.NewGuid().ToString() + Path.GetExtension(NewImage.FileName);
+                var filePath = Path.Combine(uploadsFolder, fileName);
+
+                //Save new image file to server
+                using (var fileStream = new FileStream(filePath, FileMode.Create))
                 {
                     NewImage.CopyTo(fileStream);
                 }
 
                 //Update image URL
-                existingProduct.ImageUrl = "/images/" + uniqueFileName;
+                existingProduct.ImageUrl = "/uploads/" + fileName;
             }
 
 
             //_context.Items.Update(item);
 
             //Save changes to the database
+            _context.Items.Update(existingProduct);
             _context.SaveChanges();
             return RedirectToAction("Index");
         }
